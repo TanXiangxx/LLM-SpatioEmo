@@ -55,7 +55,7 @@ def augment_positive(comment, diff_score):
     return comment + " " + enhance
 
 # 读取Excel数据
-data = pd.read_excel('./data/eat1.xlsx')  # 替换为你的文件路径
+data = pd.read_excel('merged_eat2.xlsx')  # 替换为你的文件路径
 data['star'] = pd.to_numeric(data['star'], errors='coerce')
 data['mrks'] = pd.to_numeric(data['mrks'], errors='coerce')
 
@@ -67,7 +67,7 @@ print(f"有效评分数据行数：{len(valid_rows)}")
 for idx, row in valid_rows.iterrows():
     star = row['star'] / 10.0  # 标准化为 0-5
     mrks = row['mrks']
-    comment = str(row['comment']) if pd.notna(row['comment']) else ""
+    comment = str(row['扩充评论']) if pd.notna(row['扩充评论']) else ""
 
     # 忽略空评论
     if comment.strip() == "":
@@ -103,5 +103,5 @@ if len(results) == 0:
     print("⚠️ 没有有效的结果，请检查数据文件！")
 else:
     df_results = pd.DataFrame(results)
-    df_results.to_excel("情感分析结果_细粒度3.xlsx", index=False)
+    df_results.to_excel("eat2_mood.xlsx", index=False)
     print("分析完成，结果已保存为 '情感分析结果_细粒度.xlsx'")

@@ -6,14 +6,14 @@ from shapely.geometry import Point, Polygon
 import matplotlib.colors as mcolors
 
 # 读取数据
-data = pd.read_excel('情感分析结果_细粒度3.xlsx')
+data = pd.read_excel('eat2_mood.xlsx')
 
 # 定义新的经纬度范围，扩大0.01
 lat_min, lat_max = 39.522469 - 0.01, 40.690334 + 0.01  # 纬度范围扩大0.01
 lon_min, lon_max = 115.90368 - 0.01, 117.150689 + 0.01  # 经度范围扩大0.01
 
 # 设置网格大小
-grid_size = 0.03  # 每个网格代表的经纬度差距
+grid_size = 0.05  # 每个网格代表的经纬度差距
 
 # 创建网格
 lat_bins = np.round(np.arange(lat_min, lat_max + grid_size, grid_size), 3)
@@ -28,9 +28,9 @@ grid_emotion_counts = data.groupby(['lat_grid', 'lon_grid', '情绪标签']).siz
 
 # 计算每个网格的情绪分，例如：根据比例来衡量情绪的强度
 # 计算每个网格的情绪分： (正面 - 负面) / (正面 + 负面 + 中性)
-w_pos = 1
-w_neu = 2
-w_neg = 3
+w_pos = 2.3
+w_neu = 1
+w_neg = 1.2
 
 grid_emotion_counts['emotion_score'] = (
     (w_pos * grid_emotion_counts['正面']) - (w_neg * grid_emotion_counts['负面'])
@@ -94,3 +94,4 @@ plt.ylabel("Latitude")
  
 # 显示地图
 plt.show()
+  
